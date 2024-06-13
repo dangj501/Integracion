@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using practica03;
+using presupuesto_final;
 namespace soap_test
 {
     public class Program

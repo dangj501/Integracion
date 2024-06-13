@@ -13,7 +13,7 @@ using presupuesto;
 using SoapCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace practica03
+namespace presupuesto_final
 {
     public class Startup
     {
@@ -37,7 +37,7 @@ namespace practica03
             app.UseRouting();
 
 			app.UseEndpoints(endpoints => {
-				endpoints.UseSoapEndpoint<iPresupuesto>("/Presupuesto.dran", new SoapEncoderOptions(), SoapSerializer.DataContractSerializer);
+				endpoints.UseSoapEndpoint<iPresupuesto>("/Presupuesto.equipo3", new SoapEncoderOptions(), SoapSerializer.DataContractSerializer);
 			});
         }
     }

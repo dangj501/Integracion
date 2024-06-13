@@ -7,10 +7,11 @@ namespace consultas
         public Consultas(){
             
         }
-        public decimal ObtenerCantidad(int id, MySqlConnection conexion)
+
+        public decimal ObtenerPresupuesto(int id, MySqlConnection conexion)
         {
-            decimal cantidad =0;
-            string query = "SELECT cantidad FROM presupuesto WHERE id = @id";
+            decimal presupuestos =0;
+            string query = "SELECT dinero FROM presupuesto WHERE id = @id";
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -20,28 +21,28 @@ namespace consultas
                 {
                     if (rdr.Read())
                     {
-                        cantidad = rdr.GetDecimal("cantidad");
-                        Console.WriteLine($"Cantidad del ID {id}: {cantidad}");
+                        presupuestos = rdr.GetDecimal("dinero");
+                        Console.WriteLine($"Dinero del Id {id}: {presupuestos}");
                     }
                     else
                     {
-                        Console.WriteLine($"No se encontró ningún registro con el ID {id}");
+                        Console.WriteLine($"No se encontró nada en el ID solicitado {id}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al obtener la cantidad: " + ex.Message);
+                Console.WriteLine("Error al comprobar el dinero: " + ex.Message);
             }
-            return cantidad;
+            return presupuestos;
         }
 
-        public bool ActualizarCantidad(int id, decimal nuevaCantidad, MySqlConnection conexion)
+        public bool ActualizarDinero(int id, decimal dineroNuevo, MySqlConnection conexion)
         {
             bool bandera = false;
-            string query = "UPDATE presupuesto SET cantidad = @nuevaCantidad WHERE id = @id";
+            string query = "UPDATE presupuesto SET dinero = @dineroNuevo WHERE id = @id";
             MySqlCommand cmd = new MySqlCommand(query, conexion);
-            cmd.Parameters.AddWithValue("@nuevaCantidad", nuevaCantidad);
+            cmd.Parameters.AddWithValue("@dineroNuevo", dineroNuevo);
             cmd.Parameters.AddWithValue("@id", id);
 
             try
@@ -58,7 +59,7 @@ namespace consultas
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error al actualizar la cantidad: " + ex.Message);
+                Console.WriteLine("Error al actualizar el dinero: " + ex.Message);
             }
             return bandera;
         }

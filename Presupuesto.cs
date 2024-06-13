@@ -8,54 +8,68 @@ namespace presupuesto{
     {
         Conexion conexion = new Conexion();
         Consultas consultas = new Consultas();
-        decimal cantidad = 0;
-        public string agregarPresupuesto(decimal monto)
+        decimal presupuestos = 0;
+
+    public List<decimal> mostrarPresupuestos(){
+        List<decimal> presupuestos = new List<decimal>();
+
+        for (int i = 1; i <= 11; i++){
+            decimal presupuesto = consultas.ObtenerPresupuesto(i, conexion.crearConexion());
+            presupuestos.Add(presupuesto);
+    }
+
+    return presupuestos;
+    }
+
+
+        public string agregarPresupuesto(int id,decimal dinero)
         {
+            
             string bandera = "";
-            cantidad = consultas.ObtenerCantidad(1,conexion.crearConexion());
-            if(monto<=0){
-                bandera = "NO Puedes meter numeros negativos";
+            presupuestos = consultas.ObtenerPresupuesto(id,conexion.crearConexion());
+            if(dinero<=0){
+               
+                bandera = "Una disculpa se puede ingresar numeros negativos";
+
             }else{
-                cantidad += monto;
-                if(consultas.ActualizarCantidad(1,cantidad,conexion.crearConexion()))
-                    bandera = "Se actualizo el presupuesto correctamente";
+
+                presupuestos += dinero;
+                if(consultas.ActualizarDinero(id,presupuestos,conexion.crearConexion()))
+                    bandera = "Se actualizo el presupuesto";
                 else
-                    bandera = "No se pudo actualizar El presupuesto";
+                    bandera = "No se pudo actualizar el presupuesto";
+
             }
             return bandera;
         }
 
-        public bool alcanzaElPresupuesto(decimal monto)
+         public string quitarPresupuesto(int id,decimal monto)
         {
-            cantidad = consultas.ObtenerCantidad(1,conexion.crearConexion());
+            string bandera = "";
+            presupuestos = consultas.ObtenerPresupuesto(id,conexion.crearConexion());
+            if(monto>presupuestos){
+                bandera = "No puedes sacar ya que solo queda este total $" + presupuestos;
+            }else{
+                presupuestos -= monto;
+                if(consultas.ActualizarDinero(id,presupuestos,conexion.crearConexion()))
+                    bandera = "Se actualizo correctamente";
+                else
+                    bandera = "Hubo un error al actualizarlo";
+            }
+            return bandera;
+        }
+
+        public bool alcancePresupuesto(int id, decimal monto)
+        {
+            presupuestos = consultas.ObtenerPresupuesto(id,conexion.crearConexion());
             bool bandera = false;
-            if(cantidad >= monto)
+            if(presupuestos >= monto)
                 bandera = true;
             else
                 bandera = false;
             return bandera;
         }
 
-        public decimal mostrarPresupuestoDisponible()
-        {
-            cantidad = consultas.ObtenerCantidad(1,conexion.crearConexion());
-            return cantidad;
-        }
-
-        public string sustraerPresupuesto(decimal monto)
-        {
-            string bandera = "";
-            cantidad = consultas.ObtenerCantidad(1,conexion.crearConexion());
-            if(monto>cantidad){
-                bandera = "No puedes sacar mas de: $" + cantidad;
-            }else{
-                cantidad -= monto;
-                if(consultas.ActualizarCantidad(1,cantidad,conexion.crearConexion()))
-                    bandera = "Se actualizo el Presupuesto";
-                else
-                    bandera = "Nose pudo Actualizar el presupuesto";
-            }
-            return bandera;
-        }
+               
     }
 }

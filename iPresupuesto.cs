@@ -5,13 +5,13 @@ namespace ipresupuesto{
     [ServiceContract]
     public interface iPresupuesto{
         [OperationContract]
-        public decimal mostrarPresupuestoDisponible();
+        public List<decimal> mostrarPresupuestos();
         [OperationContract]
-        public string agregarPresupuesto(decimal monto);
+        public string agregarPresupuesto(int id,decimal dinero);
         [OperationContract]
-        public string sustraerPresupuesto(decimal monto);
+        public string quitarPresupuesto(int id,decimal dinero);
         [OperationContract]
-        public bool alcanzaElPresupuesto(decimal monto);
+        public bool alcancePresupuesto(int id, decimal dinero);
         
     }
 }
